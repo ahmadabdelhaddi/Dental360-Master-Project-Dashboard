@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BarChart, axisClasses } from "@mui/x-charts";
-import { LineChart } from "@mui/x-charts/LineChart";
 import usersImage from "../Assets/images/users.png";
-import { ThemeProvider } from "@mui/styled-engine-sc";
-import { styled } from "@mui/system";
-import { createTheme } from "@mui/material/styles";
+import axios from "axios"; // Import axios for making API requests
 
 const Home = () => {
+  const [userData, setUserData] = useState([]);
+  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [pendingAppointmentsData, setPendingAppointmentsData] = useState([]);
+
+  // Function to fetch data from API endpoints
+  const fetchData = async () => {
+    try {
+      const usersResponse = await axios.get(
+        "https://backendserver-9s51.onrender.com/api/user"
+      );
+      const appointmentsResponse = await axios.get(
+        "https://backendserver-9s51.onrender.com/api/appointments"
+      );
+
+      setUserData(usersResponse.data); // Update user data state
+      setAppointmentsData(appointmentsResponse.data); // Update appointments data state
+
+      // Calculate pending appointments from the fetched data (you may need to adjust this based on your API response structure)
+      const pendingAppointmentsCount = appointmentsResponse.data.filter(
+        (appointment) => appointment.status === "pending"
+      ).length;
+      setPendingAppointmentsData(pendingAppointmentsCount);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const getTotalAppointmentsCount = (data) => {
+    let totalCount = 0;
+
+    data.forEach((item) => {
+      totalCount += item.appointments.length;
+    });
+
+    return totalCount;
+  };
+
+  // Usage:
+  const appointmentsCount = getTotalAppointmentsCount(appointmentsData);
+  console.log("Total Appointments Count:", appointmentsCount);
+
+  // Fetch data when the component mounts
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
   const xLabels = [
@@ -39,84 +82,84 @@ const Home = () => {
       Users: 59,
       paris: 57,
       newYork: 86,
-      Farms: 21,
+      Appointments: 21,
       month: "Jan",
     },
     {
       Users: 50,
       paris: 52,
       newYork: 78,
-      Farms: 28,
+      Appointments: 28,
       month: "Fev",
     },
     {
       Users: 47,
       paris: 53,
       newYork: 106,
-      Farms: 41,
+      Appointments: 41,
       month: "Mar",
     },
     {
       Users: 54,
       paris: 56,
       newYork: 92,
-      Farms: 73,
+      Appointments: 73,
       month: "Apr",
     },
     {
       Users: 57,
       paris: 69,
       newYork: 92,
-      Farms: 99,
+      Appointments: 99,
       month: "May",
     },
     {
       Users: 60,
       paris: 63,
       newYork: 103,
-      Farms: 144,
+      Appointments: 144,
       month: "June",
     },
     {
       Users: 59,
       paris: 60,
       newYork: 105,
-      Farms: 319,
+      Appointments: 319,
       month: "July",
     },
     {
       Users: 65,
       paris: 60,
       newYork: 106,
-      Farms: 249,
+      Appointments: 249,
       month: "Aug",
     },
     {
       Users: 51,
       paris: 51,
       newYork: 95,
-      Farms: 131,
+      Appointments: 131,
       month: "Sept",
     },
     {
       Users: 60,
       paris: 65,
       newYork: 97,
-      Farms: 55,
+      Appointments: 55,
       month: "Oct",
     },
     {
       Users: 67,
       paris: 64,
       newYork: 76,
-      Farms: 48,
+      Appointments: 48,
       month: "Nov",
     },
     {
       Users: 61,
       paris: 70,
       newYork: 103,
-      Farms: 25,
+      Appointments: 25,
       month: "Dec",
     },
   ];
@@ -124,7 +167,10 @@ const Home = () => {
   const valueFormatter = (value) => `${value}`;
 
   return (
-    <div className="col-lg-12 vh-100 bg-light ">
+    <div
+      className="col-lg-12 max-vh-100 bg-light"
+      style={{ overflow: "hidden" }}
+    >
       <div className="body">
         <div
           className="row"
@@ -162,7 +208,9 @@ const Home = () => {
               </div>
             </div>
             <div>
-              <span style={{ fontWeight: "700", fontSize: "40px" }}>175</span>
+              <span style={{ fontWeight: "700", fontSize: "40px" }}>
+                {userData.length}
+              </span>
               <span
                 style={{
                   fontWeight: "400",
@@ -203,7 +251,9 @@ const Home = () => {
             </div>
 
             <div>
-              <span style={{ fontWeight: "700", fontSize: "40px" }}>363</span>
+              <span style={{ fontWeight: "700", fontSize: "40px" }}>
+                {pendingAppointmentsData && pendingAppointmentsData.length}
+              </span>
               <span
                 style={{
                   fontWeight: "400",
@@ -212,7 +262,7 @@ const Home = () => {
                   display: "block",
                 }}
               >
-                Total Farms
+                Total Pending
               </span>
             </div>
           </div>
@@ -243,7 +293,9 @@ const Home = () => {
               </div>
             </div>
             <div>
-              <span style={{ fontWeight: "700", fontSize: "40px" }}>325</span>
+              <span style={{ fontWeight: "700", fontSize: "40px" }}>
+                {appointmentsData.length}
+              </span>
               <span
                 style={{
                   fontWeight: "400",
@@ -252,7 +304,7 @@ const Home = () => {
                   display: "block",
                 }}
               >
-                Total Verified
+                Total Appointments
               </span>
             </div>
           </div>
@@ -271,8 +323,8 @@ const Home = () => {
                   color: "#67B6B1", // Specify the color for this data series
                 },
                 {
-                  dataKey: "Farms",
-                  label: "Farms",
+                  dataKey: "Appointments",
+                  label: "Appointments",
                   valueFormatter,
                   color: "#088277", // Specify the color for this data series
                 },
@@ -281,7 +333,7 @@ const Home = () => {
             />
 
             <BarChart
-              width={700}
+              width={500}
               height={300}
               series={[
                 {
@@ -293,7 +345,7 @@ const Home = () => {
                 },
                 {
                   data: uData,
-                  label: "Farms",
+                  label: "Appointments",
                   id: "uvId",
                   yAxisKey: "rightAxisId",
                   color: "#088277",

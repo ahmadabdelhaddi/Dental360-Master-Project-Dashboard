@@ -21,8 +21,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <div className="dashboardContent">
-          <div className="row">
-            {user && ( // Check if the user is signed in
+          <div className="row p-0 m-0">
+            {user && user.role === "admin" && (
               <div className="col-2">
                 <Sidebar />
               </div>
@@ -57,27 +57,28 @@ function App() {
                 />
 
                 <Route
-                  path="/PendingAppointments"
+                  path="/pending-appointments"
                   element={
-                    user ? <PendingAppointments /> : <Navigate to="/signup" />
+                    user ? <PendingAppointments /> : <Navigate to="/login" />
                   }
                 />
                 <Route
-                  path="/LiveAppointments"
+                  path="/live-appointments"
                   element={
-                    user ? <LiveAppointments /> : <Navigate to="/signup" />
+                    user ? <LiveAppointments /> : <Navigate to="/login" />
                   }
                 />
                 <Route
-                  path="/AllAppointments"
+                  path="/all-appointments"
                   element={
-                    user ? <AllAppointments /> : <Navigate to="/signup" />
+                    user ? <AllAppointments /> : <Navigate to="/login" />
                   }
                 />
 
                 <Route
                   path="/users"
-                  element={user ? <Users /> : <Navigate to="/signup" />}
+                  // element={user ? <Users /> : <Navigate to="/login" />}
+                  element={<Users />}
                 />
               </Routes>
             </div>

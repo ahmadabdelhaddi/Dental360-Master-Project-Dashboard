@@ -5,7 +5,6 @@ import React from "react";
 import "./sidebar.css";
 
 // image
-// import logo from "../../assets/images/logo.png";
 import Board from "./Board";
 
 // icons
@@ -15,25 +14,28 @@ const Sidebar = () => {
   return (
     <div className="continuer-sidebar">
       {/* logo /}
-      <img src={logo} alt="logo" className="logo-sidebar" />
 
       {/ sidebar boards */}
       <ul className="menu-items mt-5">
         <Board link={"/"} title={"Dashboard"} icon={PathIcons.home} />
-        <Board link={"/users"} title={"Users"} icon={PathIcons.home} />
         <Board
-          link={"/PendingAppointments"}
+          link={"/users"}
+          title={"Users"}
+          icon={PathIcons.users}
+        />
+        <Board
+          link={"/pending-appointments"}
           title={"Pending"}
           icon={PathIcons.PendingAppointments}
         />
 
         <Board
-          link={"/LiveAppointments"}
+          link={"/live-appointments"}
           title={"Live "}
           icon={PathIcons.LiveAppointments}
         />
         <Board
-          link={"/AllAppointments"}
+          link={"/all-appointments"}
           title={"Appointments"}
           icon={PathIcons.AllAppointments}
         />

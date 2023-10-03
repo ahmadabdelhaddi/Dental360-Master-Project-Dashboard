@@ -7,6 +7,9 @@ import {
   faUsers,
   faChartBar,
   faFile,
+  faCalendarCheck,
+  faCalendarDays,
+  faChartSimple,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Style for sidebar
@@ -20,19 +23,46 @@ export class PathIcons {
   // Login icons ------------------------------
   static email = (<FontAwesomeIcon icon={faEnvelope} className="auth-icon" />);
   static password = (<FontAwesomeIcon icon={faLock} className="auth-icon" />);
+  static appointment = (
+    <FontAwesomeIcon icon={faLock} className="auth-icon" />
+  );
 
   // Sidebar icons ------------------------------
   static home = (
     <FontAwesomeIcon icon={faHome} className="auth-icon" style={sideIcon} />
   );
-  static PendingAppointments = (
+  static users = (
     <FontAwesomeIcon icon={faUsers} className="auth-icon" style={sideIcon} />
+  );
+  static PendingAppointments = (
+    <FontAwesomeIcon
+      icon={faCalendarDays}
+      className="auth-icon"
+      style={sideIcon}
+    />
+  );
+  static ssss = (
+    // <FontAwesomeIcon icon={faFile} className="auth-icon" style={sideIcon} />
+    <FontAwesomeIcon
+      icon={faCalendarDays}
+      className="auth-icon"
+      style={sideIcon}
+    />
   );
   static LiveAppointments = (
-    <FontAwesomeIcon icon={faUsers} className="auth-icon" style={sideIcon} />
+    // <FontAwesomeIcon icon={faUsers} className="auth-icon" style={sideIcon} />
+    <FontAwesomeIcon
+      icon={faCalendarCheck}
+      className="auth-icon"
+      style={sideIcon}
+    />
   );
   static AllAppointments = (
-    <FontAwesomeIcon icon={faUsers} className="auth-icon" style={sideIcon} />
+    <FontAwesomeIcon
+      icon={faChartSimple}
+      className="auth-icon"
+      style={sideIcon}
+    />
   );
 
   static reports = (

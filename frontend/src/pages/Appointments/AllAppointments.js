@@ -5,10 +5,6 @@ import { Howl, Howler } from "howler";
 import sounds from "../../Assets/sound.mp3";
 import sounds2 from "../../Assets/sound2.mp3";
 
-var sound = new Howl({
-  src: [sounds],
-});
-
 const AllAppointments = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,11 +15,7 @@ const AllAppointments = () => {
       .then((response) => {
         const data = response.data;
         if (Array.isArray(data)) {
-          // Check if userData is updated
-          if (JSON.stringify(data) !== JSON.stringify(userData)) {
-            // Play the sound only when userData is updated
-            sound.play();
-          }
+
           // Update the state with the fetched data
           setUserData(data);
         } else {
